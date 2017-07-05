@@ -30,4 +30,8 @@ class RandomIdGenerator {
 
     return $r;
   }
+
+  function addUsedKeys($list) {
+    $this->usedKeys = array_merge($this->usedKeys, $list);
+  }
 }

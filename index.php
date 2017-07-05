@@ -14,11 +14,13 @@ $generator = new RandomIdGenerator(array(
 //  'length' => 6,
 //  'prefix' => 'STO-',
 ));
+$generator->addUsedKeys(array('AAAA', 'BBBB'));
 print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
+print "Used keys: "; print_r($generator->usedKeys);
 ?>
 </pre>
   </body>
