@@ -9,13 +9,16 @@ class RandomIdGenerator {
     if (!array_key_exists('length', $this->options)) {
       $this->options['length'] = 4;
     }
+    if (!array_key_exists('prefix', $this->options)) {
+      $this->options['prefix'] = '';
+    }
 
     $this->usedKeys = array();
   }
 
   function get() {
     do {
-      $r = '';
+      $r = $this->options['prefix'];
 
       for ($j = 0; $j < $this->options['length']; $j++) {
         $r .= $this->options['chars'][rand(0, strlen($this->options['chars']) - 1)];

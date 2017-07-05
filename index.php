@@ -12,6 +12,7 @@
 $generator = new RandomIdGenerator(array(
 //  'chars' => 'ABC123',
 //  'length' => 6,
+//  'prefix' => 'STO-',
 ));
 print $generator->get() . "\n";
 print $generator->get() . "\n";
