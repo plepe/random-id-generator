@@ -92,4 +92,13 @@ EOT;
   function addUsedKeys($list) {
     $this->usedKeys = array_merge($this->usedKeys, $list);
   }
+
+  function exportToJs($count) {
+    $list = array();
+    for ($i = 0; $i < $count; $i++) {
+      $list[] = $this->get();
+    }
+
+    html_export_var(array('random_key_generator' => $list));
+  }
 }
