@@ -24,11 +24,22 @@ class RandomIdGenerator {
         $r .= $this->options['chars'][rand(0, strlen($this->options['chars']) - 1)];
       }
 
-    } while (in_array($r, $this->usedKeys));
+    } while ($this->check($r));
 
     $this->usedKeys[] = $r;
 
     return $r;
+  }
+
+  function check($key) {
+    if (in_array($key, $this->usedKeys))
+      return true;
+
+    return false;
+  }
+
+  function use($key) {
+    $this->usedKeys[] = $key;
   }
 
   function addUsedKeys($list) {

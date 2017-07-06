@@ -11,6 +11,12 @@ The constructor accepts an options parameter. The following options are availabl
 ## get()
 Return a new random id.
 
+## check(key)
+Return true, if the key is already used.
+
+## use(key)
+Add the key to the list of used keys.
+
 ## addUsedKeys()
 Add an array of used keys to the Generator, so they won't be returned again.
 
