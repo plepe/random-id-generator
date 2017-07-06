@@ -3,6 +3,10 @@ class RandomIdGenerator {
   function __construct($options) {
     $this->options = $options;
 
+    if (!array_key_exists('id', $this->options)) {
+      $this->options['id'] = '';
+    }
+    $this->id = $this->options['id'];
     if (!array_key_exists('chars', $this->options)) {
       $this->options['chars'] = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     }
@@ -63,7 +67,7 @@ EOT;
 
     if ($this->db) {
       $db_timeout = Date('Y-m-d H:i:s', time() + $this->options['db_timespan']);
-      $res = $this->db->query("insert into {$this->options['db_table']} values (1, " . $this->db->quote($r) . ", " . $this->db->quote($db_timeout) . ")");
+      $res = $this->db->query("insert into {$this->options['db_table']} values (" . $this->db->quote($this->id) . ", " . $this->db->quote($r) . ", " . $this->db->quote($db_timeout) . ")");
     }
 
     return $r;
@@ -74,7 +78,7 @@ EOT;
       return true;
 
     if ($this->db) {
-      $res = $this->db->query("select * from {$this->options['db_table']} where key=" . $this->db->quote($key));
+      $res = $this->db->query("select * from {$this->options['db_table']} where id=" . $this->db->quote($this->id) . ", key=" . $this->db->quote($key));
       $e = $res->fetch();
       $res->closeCursor();
       if ($e) {
@@ -99,6 +103,6 @@ EOT;
       $list[] = $this->get();
     }
 
-    html_export_var(array('random_key_generator' => $list));
+    html_export_var(array("random_key_generator_{$this->id}" => $list));
   }
 }

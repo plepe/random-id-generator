@@ -1,9 +1,10 @@
 A random ID generator.
 
-# API
+# PHP API
 ## Constructor
 The constructor accepts an options parameter. The following options are available:
 
+- id: id of the generator.
 - chars: list of characters from which IDs will be generated, e.g. 'ABC123'. Default: all upper characters and all digits.
 - length: length of a random ID, default: 4.
 - prefix: prefix IDs by some string, default: ''.
@@ -29,3 +30,16 @@ Export count keys to JS, so they can be returned inside a web browser.
 
 ## usedKeys
 Property, with a list of used keys.
+
+# JS API
+The JS API does not have a generator itself, but you need to export keys to the JS environment, which can than be used.
+
+```js
+var generator = new RandomIdGenerator()
+alert(generator.get())
+```
+
+If you plan to use several generators, it's necessary to use different ids.
+
+## get()
+Return a new random id from the exported pool.

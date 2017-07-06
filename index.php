@@ -1,6 +1,7 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
 $generator = new RandomIdGenerator(array(
+  'id' => 'foo',
 //  'chars' => 'ABC123',
 //  'length' => 6,
 //  'prefix' => 'STO-',
@@ -34,7 +35,9 @@ print "Used keys: "; print_r($generator->usedKeys);
 ?>
 </pre>
 <script>
-var generator = new RandomIdGenerator()
+var generator = new RandomIdGenerator({
+  id: 'foo'
+})
 alert(generator.get())
 alert(generator.get())
 </script>
