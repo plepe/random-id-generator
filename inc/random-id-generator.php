@@ -47,11 +47,6 @@ EOT;
     }
 
     $this->db->query("delete from {$this->options['db_table']} where ts<" . $this->db->quote(Date('Y-m-d H:i:s')));
-
-    $res = $this->db->query("select * from {$this->options['db_table']}");
-    while ($e = $res->fetch()) {
-      $this->usedKeys[] = $e['key'];
-    }
   }
 
   function get() {
@@ -77,6 +72,15 @@ EOT;
   function check($key) {
     if (in_array($key, $this->usedKeys))
       return true;
+
+    if ($this->db) {
+      $res = $this->db->query("select * from {$this->options['db_table']} where key=" . $this->db->quote($key));
+      $e = $res->fetch();
+      $res->closeCursor();
+      if ($e) {
+        return false;
+      }
+    }
 
     return false;
   }

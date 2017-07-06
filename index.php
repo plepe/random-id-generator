@@ -24,6 +24,7 @@ print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
 print "Used keys: "; print_r($generator->usedKeys);
+print "$x: " . ($generator->check($x) ? "used" : "not used") . "\n";
 $generator->use($x);
 print "Used keys: "; print_r($generator->usedKeys);
 ?>
