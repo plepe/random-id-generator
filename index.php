@@ -23,10 +23,8 @@ print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
-print "Reserved keys: "; print_r($generator->reservedKeys);
 print "Used keys: "; print_r($generator->usedKeys);
 $generator->use($x);
-print "Reserved keys: "; print_r($generator->reservedKeys);
 print "Used keys: "; print_r($generator->usedKeys);
 ?>
 </pre>

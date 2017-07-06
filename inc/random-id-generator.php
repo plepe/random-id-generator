@@ -23,7 +23,6 @@ class RandomIdGenerator {
     }
 
     $this->usedKeys = array();
-    $this->reservedKeys = array();
 
     if ($this->db) {
       $this->initDb();
@@ -51,7 +50,7 @@ EOT;
 
     $res = $this->db->query("select * from {$this->options['db_table']}");
     while ($e = $res->fetch()) {
-      $this->reservedKeys[] = $e['key'];
+      $this->usedKeys[] = $e['key'];
     }
   }
 
@@ -65,7 +64,7 @@ EOT;
 
     } while ($this->check($r));
 
-    $this->reservedKeys[] = $r;
+    $this->usedKeys[] = $r;
 
     if ($this->db) {
       $db_timeout = Date('Y-m-d H:i:s', time() + $this->options['db_timespan']);
@@ -78,18 +77,12 @@ EOT;
   function check($key) {
     if (in_array($key, $this->usedKeys))
       return true;
-    if (in_array($key, $this->reservedKeys))
-      return true;
 
     return false;
   }
 
   function use($key) {
     $this->usedKeys[] = $key;
-
-    if (($p = array_search($key, $this->reservedKeys)) !== false) {
-      unset($this->reservedKeys[$p]);
-    }
   }
 
   function addUsedKeys($list) {
