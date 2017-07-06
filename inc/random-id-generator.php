@@ -14,6 +14,7 @@ class RandomIdGenerator {
     }
 
     $this->usedKeys = array();
+    $this->reservedKeys = array();
   }
 
   function get() {
@@ -26,7 +27,7 @@ class RandomIdGenerator {
 
     } while ($this->check($r));
 
-    $this->usedKeys[] = $r;
+    $this->reservedKeys[] = $r;
 
     return $r;
   }
@@ -34,12 +35,18 @@ class RandomIdGenerator {
   function check($key) {
     if (in_array($key, $this->usedKeys))
       return true;
+    if (in_array($key, $this->reservedKeys))
+      return true;
 
     return false;
   }
 
   function use($key) {
     $this->usedKeys[] = $key;
+
+    if (($p = array_search($key, $this->reservedKeys)) !== false) {
+      unset($this->reservedKeys[$p]);
+    }
   }
 
   function addUsedKeys($list) {

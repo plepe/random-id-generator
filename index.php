@@ -15,11 +15,15 @@ $generator = new RandomIdGenerator(array(
 //  'prefix' => 'STO-',
 ));
 $generator->addUsedKeys(array('AAAA', 'BBBB'));
+print ($x = $generator->get()) . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
-print $generator->get() . "\n";
+print "Reserved keys: "; print_r($generator->reservedKeys);
+print "Used keys: "; print_r($generator->usedKeys);
+$generator->use($x);
+print "Reserved keys: "; print_r($generator->reservedKeys);
 print "Used keys: "; print_r($generator->usedKeys);
 ?>
 </pre>

@@ -9,16 +9,19 @@ The constructor accepts an options parameter. The following options are availabl
 - prefix: prefix IDs by some string, default: ''.
 
 ## get()
-Return a new random id.
+Return a new random id and add it the the list of reserved keys.
 
 ## check(key)
-Return true, if the key is already used.
+Return true, if the key is already used or reserved.
 
 ## use(key)
-Add the key to the list of used keys.
+Add the key to the list of used keys. If it is reserved, remove it from that list.
 
 ## addUsedKeys()
 Add an array of used keys to the Generator, so they won't be returned again.
 
 ## usedKeys
 Property, with a list of used keys.
+
+## reservedKeys
+Property, with a list of reserved keys.
