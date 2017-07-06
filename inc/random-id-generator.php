@@ -12,9 +12,47 @@ class RandomIdGenerator {
     if (!array_key_exists('prefix', $this->options)) {
       $this->options['prefix'] = '';
     }
+    if (!array_key_exists('db_table', $this->options)) {
+      $this->options['db_table'] = '__random_id_generator__';
+    }
+    if (!array_key_exists('db_timespan', $this->options)) {
+      $this->options['db_timespan'] = 3600;
+    }
+    if (array_key_exists('db', $this->options)) {
+      $this->db = $this->options['db'];
+    }
 
     $this->usedKeys = array();
     $this->reservedKeys = array();
+
+    if ($this->db) {
+      $this->initDb();
+    }
+  }
+
+  function initDb() {
+    $res = $this->db->query("select 1 from {$this->options['db_table']}");
+    if ($res === false) {
+      $query = <<<EOT
+create table {$this->options['db_table']} (
+  id		varchar(255) not null,
+  key           varchar(255) not null,
+  ts            text,
+  primary key(id, key)
+);
+EOT;
+      $this->db->query($query);
+    }
+    else {
+      $res->closeCursor();
+    }
+
+    $this->db->query("delete from {$this->options['db_table']} where ts<" . $this->db->quote(Date('Y-m-d H:i:s')));
+
+    $res = $this->db->query("select * from {$this->options['db_table']}");
+    while ($e = $res->fetch()) {
+      $this->reservedKeys[] = $e['key'];
+    }
   }
 
   function get() {
@@ -28,6 +66,11 @@ class RandomIdGenerator {
     } while ($this->check($r));
 
     $this->reservedKeys[] = $r;
+
+    if ($this->db) {
+      $db_timeout = Date('Y-m-d H:i:s', time() + $this->options['db_timespan']);
+      $res = $this->db->query("insert into {$this->options['db_table']} values (1, " . $this->db->quote($r) . ", " . $this->db->quote($db_timeout) . ")");
+    }
 
     return $r;
   }

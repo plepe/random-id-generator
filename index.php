@@ -13,6 +13,9 @@ $generator = new RandomIdGenerator(array(
 //  'chars' => 'ABC123',
 //  'length' => 6,
 //  'prefix' => 'STO-',
+//  'db' => new PDO('sqlite:data/foo.db'), // must be writeable!
+//  'db_table' => 'different_table_name',
+//  'db_timespan' => 5,
 ));
 $generator->addUsedKeys(array('AAAA', 'BBBB'));
 print ($x = $generator->get()) . "\n";
