@@ -78,11 +78,11 @@ EOT;
       return true;
 
     if ($this->db) {
-      $res = $this->db->query("select * from {$this->options['db_table']} where id=" . $this->db->quote($this->id) . ", key=" . $this->db->quote($key));
+      $res = $this->db->query("select * from {$this->options['db_table']} where id=" . $this->db->quote($this->id) . " and key=" . $this->db->quote($key));
       $e = $res->fetch();
       $res->closeCursor();
       if ($e) {
-        return false;
+        return true;
       }
     }
 
