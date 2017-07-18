@@ -23,6 +23,9 @@ $generator->exportToJs(16);
 <pre>
 <?php
 $generator->addUsedKeys(array('AAAA', 'BBBB'));
+$generator->setCheckFun(function ($id) {
+  return $id === 'CCCC';
+});
 print ($x = $generator->get()) . "\n";
 print $generator->get() . "\n";
 print $generator->get() . "\n";
@@ -30,6 +33,7 @@ print $generator->get() . "\n";
 print $generator->get() . "\n";
 print "Used keys: "; print_r($generator->usedKeys);
 print "$x: " . ($generator->check($x) ? "used" : "not used") . "\n";
+print "CCCC: " . ($generator->check('CCCC') ? "used" : "not used") . "\n";
 $generator->use($x);
 print "Used keys: "; print_r($generator->usedKeys);
 ?>

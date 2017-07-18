@@ -25,6 +25,11 @@ Add the key to the list of used keys.
 ## addUsedKeys()
 Add an array of used keys to the Generator, so they won't be returned again.
 
+## setCheckFun()
+Set a function which will be called when checking if a key already exists.
+
+The function gets passed the key to be checked. If the key exists, the function should return true, otherwise false.
+
 ## exportToJs(count)
 Export count keys to JS, so they can be returned inside a web browser.
 

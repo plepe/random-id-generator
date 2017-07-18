@@ -27,6 +27,7 @@ class RandomIdGenerator {
     }
 
     $this->usedKeys = array();
+    $this->checkFun = null;
 
     if ($this->db) {
       $this->initDb();
@@ -86,6 +87,12 @@ EOT;
       }
     }
 
+    if ($this->checkFun) {
+      if (call_user_func($this->checkFun, $key)) {
+        return true;
+      }
+    }
+
     return false;
   }
 
@@ -95,6 +102,10 @@ EOT;
 
   function addUsedKeys($list) {
     $this->usedKeys = array_merge($this->usedKeys, $list);
+  }
+
+  function setCheckFun($fun) {
+    $this->checkFun = $fun;
   }
 
   function exportToJs($count) {
