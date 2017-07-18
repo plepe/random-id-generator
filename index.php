@@ -9,6 +9,10 @@ $generator = new RandomIdGenerator(array(
 //  'db_table' => 'different_table_name',
 //  'db_timespan' => 5,
 ));
+$generator2 = new RandomIdGenerator(array(
+  'id' => 'bar'
+));
+
 $generator->exportToJs(16);
 ?>
 <html>
@@ -23,6 +27,7 @@ $generator->exportToJs(16);
 <pre>
 <?php
 $generator->addUsedKeys(array('AAAA', 'BBBB'));
+$generator2->addUsedKeys(array('DDDD'));
 $generator->setCheckFun(function ($id) {
   return $id === 'CCCC';
 });
@@ -34,6 +39,9 @@ print $generator->get() . "\n";
 print "Used keys: "; print_r($generator->usedKeys);
 print "$x: " . ($generator->check($x) ? "used" : "not used") . "\n";
 print "CCCC: " . ($generator->check('CCCC') ? "used" : "not used") . "\n";
+print "(2  global) CCCC: " . ($generator2->check('CCCC') ? "used" : "not used") . "\n";
+print "(1  global) DDDD: " . ($generator->check('DDDD') ? "used" : "not used") . "\n";
+print "(1 !global) DDDD: " . ($generator->check('DDDD', false) ? "used" : "not used") . "\n";
 $generator->use($x);
 print "Used keys: "; print_r($generator->usedKeys);
 ?>

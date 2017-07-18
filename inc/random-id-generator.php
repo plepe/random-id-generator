@@ -1,4 +1,6 @@
 <?php
+$allRandomIdGenerators = array();
+
 class RandomIdGenerator {
   function __construct($options) {
     $this->options = $options;
@@ -32,6 +34,9 @@ class RandomIdGenerator {
     if ($this->db) {
       $this->initDb();
     }
+
+    global $allRandomIdGenerators;
+    $allRandomIdGenerators[] = $this;
   }
 
   function initDb() {
@@ -74,7 +79,7 @@ EOT;
     return $r;
   }
 
-  function check($key) {
+  function check($key, $global=true) {
     if (in_array($key, $this->usedKeys))
       return true;
 
@@ -90,6 +95,19 @@ EOT;
     if ($this->checkFun) {
       if (call_user_func($this->checkFun, $key)) {
         return true;
+      }
+    }
+
+    if ($global) {
+      global $allRandomIdGenerators;
+      foreach ($allRandomIdGenerators as $gen) {
+        if ($gen === $this) {
+          continue;
+        }
+
+        if ($gen->check($key, false)) {
+          return true;
+        }
       }
     }
 

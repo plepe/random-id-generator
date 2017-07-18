@@ -16,8 +16,8 @@ The constructor accepts an options parameter. The following options are availabl
 ## get()
 Return a new random id and add it the the list of used keys.
 
-## check(key)
-Return true, if the key is already used.
+## check(key, global)
+Return true, if the key is already used. By default, all loaded RandomIdGenerators will be checked to allow globally unique ids. Set parameter global to false, to disable this check.
 
 ## use(key)
 Add the key to the list of used keys.
