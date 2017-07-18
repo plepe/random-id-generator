@@ -1,6 +1,11 @@
 <?php
 $allRandomIdGenerators = array();
 
+function getRandomIdGenerator($id) {
+  global $allRandomIdGenerators;
+  return $allRandomIdGenerators[$id];
+}
+
 class RandomIdGenerator {
   function __construct($options) {
     $this->options = $options;
@@ -36,7 +41,7 @@ class RandomIdGenerator {
     }
 
     global $allRandomIdGenerators;
-    $allRandomIdGenerators[] = $this;
+    $allRandomIdGenerators[$this->id] = $this;
   }
 
   function initDb() {

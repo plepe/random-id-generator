@@ -1,6 +1,9 @@
 A random ID generator.
 
 # PHP API
+## getRandomIdGenerator(id)
+Return the random id generator with the given id.
+
 ## Constructor
 The constructor accepts an options parameter. The following options are available:
 
