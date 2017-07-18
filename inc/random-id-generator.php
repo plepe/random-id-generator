@@ -54,10 +54,10 @@ class RandomIdGenerator {
     if ($res === false) {
       $query = <<<EOT
 create table {$this->options['db_table']} (
-  id		varchar(255) not null,
-  key           varchar(255) not null,
+  generator_id	varchar(255) not null,
+  id            varchar(255) not null,
   ts            text,
-  primary key(id, key)
+  primary key(generator_id, id)
 );
 EOT;
       $this->db->query($query);
@@ -94,7 +94,7 @@ EOT;
       return true;
 
     if (isset($this->db)) {
-      $res = $this->db->query("select * from {$this->options['db_table']} where id=" . $this->db->quote($this->id) . " and key=" . $this->db->quote($key));
+      $res = $this->db->query("select * from {$this->options['db_table']} where generator_id=" . $this->db->quote($this->id) . " and id=" . $this->db->quote($key));
       $e = $res->fetch();
       $res->closeCursor();
       if ($e) {
