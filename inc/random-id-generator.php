@@ -36,7 +36,7 @@ class RandomIdGenerator {
     $this->usedKeys = array();
     $this->checkFun = null;
 
-    if ($this->db) {
+    if (isset($this->db)) {
       $this->initDb();
     }
 
@@ -76,7 +76,7 @@ EOT;
 
     $this->usedKeys[] = $r;
 
-    if ($this->db) {
+    if (isset($this->db)) {
       $db_timeout = Date('Y-m-d H:i:s', time() + $this->options['db_timespan']);
       $res = $this->db->query("insert into {$this->options['db_table']} values (" . $this->db->quote($this->id) . ", " . $this->db->quote($r) . ", " . $this->db->quote($db_timeout) . ")");
     }
@@ -88,7 +88,7 @@ EOT;
     if (in_array($key, $this->usedKeys))
       return true;
 
-    if ($this->db) {
+    if (isset($this->db)) {
       $res = $this->db->query("select * from {$this->options['db_table']} where id=" . $this->db->quote($this->id) . " and key=" . $this->db->quote($key));
       $e = $res->fetch();
       $res->closeCursor();
