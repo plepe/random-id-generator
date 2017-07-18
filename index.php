@@ -5,7 +5,10 @@ $generator = new RandomIdGenerator(array(
 //  'chars' => 'ABC123',
 //  'length' => 6,
 //  'prefix' => 'STO-',
-//  'db' => new PDO('sqlite:data/foo.db'), // must be writeable!
+//  'db' => new PDO('sqlite:data/foo.db', null, null, array(
+//    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+//    PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC
+//  )), // must be writeable!
 //  'db_table' => 'different_table_name',
 //  'db_timespan' => 5,
 ));

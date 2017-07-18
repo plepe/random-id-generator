@@ -45,7 +45,12 @@ class RandomIdGenerator {
   }
 
   function initDb() {
-    $res = $this->db->query("select 1 from {$this->options['db_table']}");
+    try {
+      $res = $this->db->query("select 1 from {$this->options['db_table']}");
+    } catch(Exception $e) {
+      $res = false;
+    }
+
     if ($res === false) {
       $query = <<<EOT
 create table {$this->options['db_table']} (
